@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест: Чи знаєте ви ЧНУ? — ЧНУ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Повернутися до карти</a>
+        <h1>Архітектурний Квіз</h1>
+        <p style="text-align: center; color: #ccc;">Перевір свої знання. Правильні відповіді підсвічуються зеленим після перевірки.</p>
+
+        <div class="test-container">
+            <div class="question-block" id="q1-block">
+                <h3>1. Яка зала Митрополичого корпусу вважається однією з найкрасивіших в Європі?</h3>
+                <img src="main-zone.jpg" class="test-img" alt="Митрополичий корпус">
+                <div class="options">
+                    <label class="option"><input type="radio" name="q1" value="0"> Блакитна зала</label>
+                    <label class="option" id="correct1"><input type="radio" name="q1" value="1"> Мармурова зала</label>
+                    <label class="option"><input type="radio" name="q1" value="0"> Червона зала</label>
+                </div>
+            </div>
+
+            <div class="question-block" id="q2-block">
+                <h3>2. Що прикрашає дах Семінарського корпусу, створений Йозефом Главкою?</h3>
+                <img src="seminary-zone.png" class="test-img" alt="Семінарський корпус">
+                <div class="options">
+                    <label class="option"><input type="radio" name="q2" value="0"> Сцени з Біблії</label>
+                    <label class="option" id="correct2"><input type="radio" name="q2" value="1"> Буковинські народні орнаменти</label>
+                    <label class="option"><input type="radio" name="q2" value="0"> Герби австрійських імператорів</label>
+                </div>
+            </div>
+
+            <div class="question-block" id="q3-block">
+                <h3>3. Скільки бань має Трьох-Святительська церква і кого вони символізують?</h3>
+                <img src="church-zone.jpg" class="test-img" alt="Церква">
+                <div class="options">
+                    <label class="option" id="correct3"><input type="radio" name="q3" value="1"> П'ять бань (Христа та євангелістів)</label>
+                    <label class="option"><input type="radio" name="q3" value="0"> Три бані (Святу Трійцю)</label>
+                    <label class="option"><input type="radio" name="q3" value="0"> Сім бань (Сім таїнств)</label>
+                </div>
+            </div>
+
+            <div class="question-block" id="q4-block">
+                <h3>4. Яка особлива споруда прикрашає Гостинний корпус?</h3>
+                <img src="guest-zone.png" class="test-img" alt="Гостинний корпус">
+                <div class="options">
+                    <label class="option"><input type="radio" name="q4" value="0"> Оглядовий майданчик</label>
+                    <label class="option" id="correct4"><input type="radio" name="q4" value="1"> Вежа з годинником</label>
+                    <label class="option"><input type="radio" name="q4" value="0"> Тріумфальна арка</label>
+                </div>
+            </div>
+
+            <button class="btn-check" onclick="checkTest()">Перевірити результат</button>
+            
+            <div id="result-box">
+                <p id="result-text" style="font-size: 1.2rem; font-weight: bold;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkTest() {
+            let score = 0;
+            const totalQuestions = 4;
+            document.querySelectorAll('.option').forEach(el => el.classList.remove('correct', 'wrong'));
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const correctOption = document.getElementById(`correct${i}`);
+
+                if (!selected) {
+                    alert("Будь ласка, дайте відповіді на всі запитання!");
+                    return;
+                }
+
+                if (selected.value === "1") {
+                    score++;
+                    selected.parentElement.classList.add('correct');
+                } else {
+                    selected.parentElement.classList.add('wrong');
+                    correctOption.classList.add('correct');
+                }
+            }
+
+            const resText = document.getElementById('result-text');
+            const resBox = document.getElementById('result-box');
+            resBox.style.padding = "20px";
+            resBox.style.background = "#3d3d3e";
+            resBox.style.borderRadius = "10px";
+
+            if(score === totalQuestions) {
+                resText.innerHTML = `Блискуче! ${score}/${totalQuestions}. Ти — майстер архітектури ЧНУ! 🏛️`;
+                resText.style.color = "var(--gold)";
+            } else {
+                resText.innerHTML = `Ваш результат: ${score} з ${totalQuestions}. Перевір позначені правильні відповіді.`;
+                resText.style.color = "white";
+            }
+            resBox.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

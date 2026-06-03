@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЧНУ | Інтерактивний Гід</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Чернівецький національний університет</h1>
+        <p style="max-width: 800px; margin: 20px auto; color: #ccc;">
+            Резиденція митрополитів Буковини і Далмації — це архітектурний шедевр, включений до списку всесвітньої спадщини ЮНЕСКО. 
+            Натисніть на корпуси, щоб дізнатися більше про їхню історію та призначення.
+        </p>
+    </header>
+
+    <div class="map-container">
+        <img src="main-univ.jpg" alt="Університет" class="base-image">
+        <svg viewBox="0 0 1000 600" class="map-svg">
+            <polygon points="250,80 690,80 690,205 250,205" class="map-zone park-zone" onclick="location.href='park.html'"></polygon>
+            <polygon points="310,206 730,206 730,294 310,294" class="map-zone main-zone" onclick="location.href='metropolitan.html'"></polygon>
+            <rect x="750" y="285" width="128" height="300" class="map-zone guest-zone" transform="rotate(-28, 814, 435)" onclick="location.href='guest.html'"></rect>
+            <rect x="0" y="294" width="330" height="281" class="map-zone seminary-zone" onclick="location.href='seminary.html'"></rect>
+            <rect x="180" y="340" width="130" height="130" class="map-zone church-zone" onclick="location.href='church.html'"></rect>
+        </svg>
+    </div>
+
+    <div style="margin-bottom: 50px;">
+        <a href="test.html" class="btn-test">Пройти тест на знавця ЧНУ</a>
+        <a href="puzzle.html" class="btn-test">Зібрати конструктор корпусів</a>
+    </div>
+
+    <footer>
+        <p>Чернівецький національний університет імені Юрія Федьковича</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">
+            Розроблено за підтримки <strong>Google Gemini AI</strong>
+        </p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Конструктор Резиденції — ЧНУ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← На головну</a>
+        <h1>Збери Резиденцію</h1>
+        <p style="text-align: center;">Перетягніть назви корпусів у правильні зони конструкції.</p>
+
+        <img src="main-univ.jpg" class="puzzle-bg" alt="Схема">
+
+        <div class="drag-items" id="drag-items">
+            <div class="drag-item" draggable="true" id="item-main">Митрополичий корпус</div>
+            <div class="drag-item" draggable="true" id="item-seminary">Семінарський корпус</div>
+            <div class="drag-item" draggable="true" id="item-church">Церква Трьох Святителів</div>
+            <div class="drag-item" draggable="true" id="item-guest">Гостинний корпус</div>
+            <div class="drag-item" draggable="true" id="item-park">Дендропарк</div>
+        </div>
+
+        <div class="drop-zones">
+            <div><small>Верхня зона (задня):</small> <div class="drop-target" data-correct="item-park"></div></div>
+            <div><small>Центральна будівля:</small> <div class="drop-target" data-correct="item-main"></div></div>
+            <div><small>Будівля ліворуч:</small> <div class="drop-target" data-correct="item-seminary"></div></div>
+            <div><small>Будівля праворуч:</small> <div class="drop-target" data-correct="item-guest"></div></div>
+            <div><small>Купольна споруда:</small> <div class="drop-target" data-correct="item-church"></div></div>
+        </div>
+
+        <button class="btn-nav" style="display: block; width: 100%; margin-top: 30px; cursor: pointer;" onclick="checkPuzzle()">Перевірити конструкцію</button>
+        <p id="puzzle-res" style="text-align: center; margin-top: 20px; font-weight: bold;"></p>
+    </div>
+
+    <script>
+        
+const draggables = document.querySelectorAll('.drag-item');
+const containers = document.querySelectorAll('.drop-target');
+const dragItemsContainer = document.getElementById('drag-items');
+
+draggables.forEach(draggable => {
+    draggable.addEventListener('dragstart', () => {
+        draggable.classList.add('dragging');
+    });
+    draggable.addEventListener('dragend', () => {
+        draggable.classList.remove('dragging');
+    });
+});
+
+containers.forEach(container => {
+    container.addEventListener('dragover', e => {
+        e.preventDefault(); 
+        container.classList.add('hover');
+    });
+
+    container.addEventListener('dragleave', () => {
+        container.classList.remove('hover');
+    });
+
+    container.addEventListener('drop', e => {
+        e.preventDefault(); 
+        container.classList.remove('hover');
+        
+        const draggable = document.querySelector('.dragging');
+        
+        
+        if (container.children.length === 0) {
+            container.appendChild(draggable);
+        } else {
+            
+            const existingItem = container.children[0];
+            dragItemsContainer.appendChild(existingItem);
+            container.appendChild(draggable);
+        }
+    });
+});
+
+dragItemsContainer.addEventListener('dragover', e => {
+    e.preventDefault();
+    dragItemsContainer.classList.add('hover-bg'); 
+});
+
+dragItemsContainer.addEventListener('dragleave', () => {
+    dragItemsContainer.classList.remove('hover-bg');
+});
+
+dragItemsContainer.addEventListener('drop', e => {
+    e.preventDefault();
+    dragItemsContainer.classList.remove('hover-bg');
+    const draggable = document.querySelector('.dragging');
+    dragItemsContainer.appendChild(draggable);
+});
+
+
+function checkPuzzle() {
+    let correctCount = 0;
+    let allFilled = true;
+
+    containers.forEach(container => {
+        const child = container.children[0];
+        
+        // Очищення попередніх результатів
+        container.style.borderColor = "var(--gold)";
+
+        if (child) {
+            if (child.id === container.dataset.correct) {
+                container.style.borderColor = "#2ecc71"; // Зелений
+                correctCount++;
+            } else {
+                container.style.borderColor = "#e74c3c"; // Червоний
+            }
+        } else {
+            allFilled = false;
+        }
+    });
+    
+    const res = document.getElementById('puzzle-res');
+    
+    if (!allFilled) {
+        res.innerHTML = "Заповніть усі комірки конструкції!";
+        res.style.color = "white";
+        return;
+    }
+
+    if (correctCount === 5) {
+        res.innerHTML = "Блискуче! Резиденцію митрополитів успішно відбудовано! 🏛️✨";
+        res.style.color = "#2ecc71";
+    } else {
+        res.innerHTML = `Знайдено помилки. Правильно зібрано: ${correctCount} з 5. Спробуйте ще раз.`;
+        res.style.color = "white";
+    }
+}
+    </script>
+</body>
+</html>
